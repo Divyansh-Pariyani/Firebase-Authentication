@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase</title>
+</head>
+<body>
+
+    <script type="module">
+        // Importing the crucial details
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-app.js";
+        import { getDatabase, ref, set, get, child } from "https://www.gstatic.com/firebasejs/9.6.11/firebase-database.js";
+         
+        // Firebase code
+        const firebaseConfig = {
+            apiKey: "AIzaSyDr7DHtBfTvbsUnnzxLi0TKY70ofdWrbkI",
+            authDomain: "test-js-firebase-web-app-b108f.firebaseapp.com",
+            projectId: "test-js-firebase-web-app-b108f",
+            storageBucket: "test-js-firebase-web-app-b108f.appspot.com",
+            messagingSenderId: "480838877266",
+            appId: "1:480838877266:web:83fd3dbe6a7d99d289df8b"
+        };
+         
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+         
+        //getting the database 
+        const db = getDatabase(app);
+         
+        //getting the main form and adding a event listener
+        document.getElementById('frmContact').addEventListener('submit', function(e) {
+            e.preventDefault();
+            set(ref(db, 'users/' + Math.random().toString(36).slice(2, 7)), { //it will generate a random name 
+                name: document.getElementById('fullname').value,//getting the name inputbox
+                email: document.getElementById('email').value, //getting the email input box
+                subject: document.getElementById('subject').value, //getting the subject input box
+                message: document.getElementById('message').value //getting the message input box
+            });
+         
+            alert('Your form is submitted'); //it will pop up a alert box
+            document.getElementById('frmContact').reset(); //it will reset the box
+        });
+</script>
+    <form method="post" id="frmContact">
+        <p>
+            Fullname: <input type="text" name="fullname" id="fullname" required />
+        </p>
+        <p>
+            Email: <input type="email" name="email" id="email" required />
+        </p>
+        <p>
+            Subject: <input type="text" name="subject" id="subject" />
+        </p>
+        <p>
+            Message: <textarea name="message" id="message"></textarea>
+        </p>
+        <button type="submit" name="submit">Submit</button>
+    </form>
+</body>
+</html>
